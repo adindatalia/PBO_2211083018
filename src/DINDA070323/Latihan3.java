@@ -18,8 +18,8 @@ public class Latihan3 {
         
         
         
-       System.out.println("number 1 = " +);
-       System.out.println("number 2 = " +);
-       System.out.println("number 3 = " +);
+       System.out.println("number 1 = " +number1);
+       System.out.println("number 2 = " +number2);
+       System.out.println("number 3 = " +number3);
     }
 }
