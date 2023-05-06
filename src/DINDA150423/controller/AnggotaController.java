@@ -29,8 +29,8 @@ public class AnggotaController {
     public void saveAnggota(){
         anggota = new Anggota();
         anggota.setNobp(formAnggota.getTxtNobp().getText());
-        anggota.setNama(formAnggota.getTxtNobp().getText());
-        anggota.setAlamat(formAnggota.getTxtNobp().getText());
+        anggota.setNama(formAnggota.getTxtNama().getText());
+        anggota.setAlamat(formAnggota.getTxtAlamat().getText());
         anggotaDao.save(anggota);
         javax.swing.JOptionPane.showMessageDialog(formAnggota, "Entri Ok");
     }
@@ -62,6 +62,7 @@ public class AnggotaController {
     
     public void tampilData(){
         DefaultTableModel tabelModel = (DefaultTableModel) formAnggota.getTblAnggota().getModel();
+        tabelModel.setRowCount(0);
         java.util.List<Anggota> list = anggotaDao.getAll();
         for(Anggota anggota : list){
             Object[] data = {
