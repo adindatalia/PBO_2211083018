@@ -9,13 +9,14 @@ package DINDA010423;
  * @author Administrator
  */
 public class StudentRecord {
-     private String name;
+    protected String name;
     private String address;
     private int age; 
     private double mathGrade; 
     private double englishGrade;
     private double scienceGrade;
-    private double average;
+    protected double average;
+    private char huruf;
     
     private static int studentCount; //class variabel
     
@@ -87,5 +88,25 @@ public class StudentRecord {
         System.out.println("Math Grade:" + mGrade); 
         System.out.println("English Grade:" + eGrade); 
         System.out.println("Science Grade:" + sGrade);
-    } 
+    }
+    
+    public char getHuruf(){
+        double average1 = average;
+        if (average1 > 80 && average1 <= 100){
+            huruf = 'A';
+        }
+        else if (average1 > 65 && average1 <= 80){
+            huruf = 'B';
+        }
+        else if (average1 > 55 && average1 <= 65){
+            huruf = 'C';
+        }
+        else if (average1 > 40 && average1 <= 55){
+            huruf = 'D';
+        }
+        else{
+            huruf = 'E';
+        }
+        return huruf;
+    }
 }            
