@@ -6,47 +6,55 @@ package DINDA.model;
 
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class Buku {
-    private String kodebuku;
-    private String judulbuku;
-    private String pengarang;
+    private String kodeBuku;   
+    private String judulBuku;   
+    private String pengarang;   
     private String penerbit;
-    
-public Buku(){
-}
 
-public Buku(String kodebuku, String judulbuku, 
-        String pengarang, String penerbit, String thnterbit){
-    this.kodebuku = kodebuku;
-    this.judulbuku = judulbuku;
-    this.pengarang = pengarang;
-    this.penerbit = penerbit;
-}
-    public String getKodebuku(){
-        return kodebuku;
-    }
-    public void setKodeBuku(String kodebuku){
-        this.kodebuku = kodebuku;
+    public Buku() {}
+    public Buku(String kodeBuku, String judulBuku, String pengarang, String penerbit) {
+        this.kodeBuku = kodeBuku;
+        this.judulBuku = judulBuku;
+        this.pengarang = pengarang;
+        this.penerbit = penerbit;
     }
 
-    public String getJudulBuku(){
-        return judulbuku;
+    public String getKodeBuku() {
+        return kodeBuku;
     }
-    public void setJudulBuku(String judulbuku){
-            this.judulbuku = judulbuku;
+
+    public String getJudulBuku() {
+        return judulBuku;
     }
-    public String getPengarang(){
+
+    public String getPengarang() {
         return pengarang;
     }
-    public void setPengarang(String pengarang){
-        this.pengarang = pengarang;
-    }
-    public String getPenerbit(){
+
+    public String getPenerbit() {
         return penerbit;
     }
-    public void setPenerbit(String penerbit){
+
+    public void setKodeBuku(String kodeBuku) {
+        this.kodeBuku = kodeBuku;
+    }
+
+    public void setJudulBuku(String judulBuku) {
+        this.judulBuku = judulBuku;
+    }
+
+    public void setPengarang(String pengarang) {
+        this.pengarang = pengarang;
+    }
+
+    public void setPenerbit(String penerbit) {
         this.penerbit = penerbit;
+    }
+
+    public String getKodebuku() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

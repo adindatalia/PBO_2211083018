@@ -4,109 +4,126 @@
  */
 package DINDA.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class Pengembalian {
-      private String kodeAgg;
-    private String namaAnggota;
+    private String kodeAnggota;
     private String kodeBuku;
-    private String judul;
-    private String tglpPjm;
-    private String tglkmbl;
+    private String tglPinjam;
     private String tglDikembalikan;
     private int terlambat;
     private double denda;
 
-    public Pengembalian() {
-    }
+    public Pengembalian(){}
 
-    public Pengembalian(String kodeAgg, String namaAnggota, String kodeBuku, String judul, String tglpPjm,
-            String tglkmbl, String tglDikembalikan, int terlambat, double denda) {
-        this.kodeAgg = kodeAgg;
-        this.namaAnggota = namaAnggota;
+    public Pengembalian(String kodeAnggota, String kodeBuku, String tglPinjam, String tglDikembalikan) {
+        this.kodeAnggota = kodeAnggota;
         this.kodeBuku = kodeBuku;
-        this.judul = judul;
-        this.tglpPjm = tglpPjm;
-        this.tglkmbl = tglkmbl;
+        this.tglPinjam = tglPinjam;
         this.tglDikembalikan = tglDikembalikan;
-        this.terlambat = terlambat;
-        this.denda = denda;
     }
 
-    public String getKodeAgg() {
-        return kodeAgg;
-    }
-
-    public void setKodeAgg(String kodeAgg) {
-        this.kodeAgg = kodeAgg;
-    }
-
-    public String getNamaAnggota() {
-        return namaAnggota;
-    }
-
-    public void setNamaAnggota(String namaAnggota) {
-        this.namaAnggota = namaAnggota;
-    }
-
-    public String getKodeBuku() {
-        return kodeBuku;
+    public void setKodeAnggota(String kodeAnggota) {
+        this.kodeAnggota = kodeAnggota;
     }
 
     public void setKodeBuku(String kodeBuku) {
         this.kodeBuku = kodeBuku;
     }
 
-    public String getJudul() {
-        return judul;
-    }
-
-    public void setJudul(String judul) {
-        this.judul = judul;
-    }
-
-    public String getTglpPjm() {
-        return tglpPjm;
-    }
-
-    public void setTglpPjm(String tglpPjm) {
-        this.tglpPjm = tglpPjm;
-    }
-
-    public String getTglkmbl() {
-        return tglkmbl;
-    }
-
-    public void setTglkmbl(String tglkmbl) {
-        this.tglkmbl = tglkmbl;
-    }
-
-    public String getTglDikembalikan() {
-        // SimpleDateFormat format = new SimpleDateFormy
-        return tglDikembalikan;
+    public void setTglPinjam(String tglPinjam) {
+        this.tglPinjam = tglPinjam;
     }
 
     public void setTglDikembalikan(String tglDikembalikan) {
         this.tglDikembalikan = tglDikembalikan;
     }
 
+    public void setTerlambat(String tglKembali) {
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate deadline = LocalDate.parse(tglKembali, formatter);
+            LocalDate dikembalikan = LocalDate.parse(this.tglDikembalikan, formatter);
+
+            terlambat = 0;
+            if (dikembalikan.isAfter(deadline)) {
+                terlambat = (int) ChronoUnit.DAYS.between(deadline, dikembalikan);
+            }
+        }catch(Exception e){
+            //JOptionPane.showMessageDialog(null, e);
+            tglDikembalikan = "Belum dikembalikan";
+            terlambat = 0;
+        }
+    }
+
+    public void setDenda() {
+        this.denda = terlambat * 2000;
+    }
+
+    public String getKodeAnggota() {
+        return kodeAnggota;
+    }
+
+    public String getKodeBuku() {
+        return kodeBuku;
+    }
+
+    public String getTglPinjam() {
+        return tglPinjam;
+    }
+
+    public String getTglDikembalikan() {
+        return tglDikembalikan;
+    }
+
     public int getTerlambat() {
         return terlambat;
     }
 
-    public void setTerlambat(int terlambat) {
-        this.terlambat = terlambat;
-    }
-
     public double getDenda() {
-        denda = terlambat * 1000;
         return denda;
+    } 
+
+    public Object getNamaAnggota() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setDenda(double denda) {
-        this.denda = denda;
+    public Object getJudul() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public Object getTglpPjm() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getTglkmbl() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getKodeAgg() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setKodeAgg(String toString) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setTglpPjm(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setDenda(double parseDouble) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setTerlambat(int terlambat) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

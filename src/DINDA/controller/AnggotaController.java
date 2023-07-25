@@ -3,105 +3,124 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DINDA.controller;
+
+import DINDA.dao.*;
+import DINDA.db.DbHelper;
+import DINDA.model.Anggota;
 import DINDA.view.FormAnggota;
-import DINDA.model.*;
+import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import DINDA.Dao.*;
+
+
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class AnggotaController {
-    private FormAnggota formAnggota;
-    private AnggotaDao anggotaDao;
     private Anggota anggota;
+    private AnggotaDao anggotaDao;
+    private Connection con;
+    private FormAnggota form;
     
-    public AnggotaController (FormAnggota formAnggota){
-        this.formAnggota = formAnggota;
-        anggotaDao = new AnggotaDaoImpl();
+    
+    public AnggotaController(FormAnggota form) {
+        try {
+            this.form = form;
+            con = DbHelper.getConnection();
+            anggotaDao = new AnggotaDaoImpl(con);
+            anggota = new Anggota();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void bersihForm(){
-        formAnggota.getTxtKodeAnggota().setText("");
-        formAnggota.getTxtNamaAnggota().setText("");
-        formAnggota.getTxtAlamat().setText("");
+    public void clear(){
+        form.getTxtNama().setText("");
+        form.getTxtKodeAnggota().setText("");
+        form.getTxtAlamat().setText("");
+        form.getTxtNotif().setText("");
+        
+        form.getCboKelamin().removeAllItems();
+        form.getCboKelamin().addItem("Jenis kelamin");
+        form.getCboKelamin().addItem("L");
+        form.getCboKelamin().addItem("P");
+        form.getCboKelamin().setSelectedIndex(0);
     }
     
-    public void saveAnggota(){
+    public void get(){
+        try {
+            String kode = form.getTblAnggota()
+                    .getValueAt(form.getTblAnggota().getSelectedRow(), 0).toString();
+            anggota = anggotaDao.getAnggota(kode);
+            form.getTxtKodeAnggota().setText(anggota.getKodeAnggota());
+            form.getTxtNama().setText(anggota.getNamaAnggota());
+            form.getTxtAlamat().setText(anggota.getAlamat());
+            form.getCboKelamin().setSelectedItem(anggota.getJenisKelamin());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(form, e);
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void insert(){
         try {
             anggota = new Anggota();
-            anggota.setKodeanggota(formAnggota.getTxtKodeAnggota().getText());
-            anggota.setNamaanggota(formAnggota.getTxtNamaAnggota().getText());
-            anggota.setAlamat(formAnggota.getTxtAlamat().getText());
+            anggota.setNamaAnggota(form.getTxtNama().getText());
+            anggota.setKodeAnggota(form.getTxtKodeAnggota().getText());
+            anggota.setAlamat(form.getTxtAlamat().getText());
+            anggota.setJenisKelamin(form.getCboKelamin().getSelectedItem().toString());
             anggotaDao.insert(anggota);
-            javax.swing.JOptionPane.showMessageDialog(formAnggota, "Entri Ok");
+            JOptionPane.showMessageDialog(form, "Insert Ok!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(form, ex.getMessage());
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void update(){
+        try {
+            anggota.setNamaAnggota(form.getTxtNama().getText());
+            anggota.setKodeAnggota(form.getTxtKodeAnggota().getText());
+            anggota.setAlamat(form.getTxtAlamat().getText());
+            anggota.setJenisKelamin(form.getCboKelamin().getSelectedItem().toString());
+            anggotaDao.update(anggota);
+            JOptionPane.showMessageDialog(form, "Update Ok!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(form, ex.getMessage());
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void delete(){
+        try {
+            anggotaDao.delete(anggota);
+            JOptionPane.showMessageDialog(form, "Delete OK!");
         } catch (Exception ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void getAnggota(){
+    public void display(){
         try {
-            anggota = anggotaDao.getAnggota("");
-            if(anggota != null){
-                formAnggota.getTxtKodeAnggota().setText(anggota.getKodeanggota());
-                formAnggota.getTxtNamaAnggota().setText(anggota.getNamaanggota());
-                formAnggota.getTxtAlamat().setText(anggota.getAlamat());
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void updateAnggota(){
-        try {
-            anggota.setKodeanggota(formAnggota.getTxtKodeAnggota().getText());
-            anggota.setNamaanggota(formAnggota.getTxtNamaAnggota().getText());
-            anggota.setAlamat(formAnggota.getTxtAlamat().getText());
-            anggotaDao.update("", anggota);
-            javax.swing.JOptionPane.showMessageDialog(formAnggota,"Upadate ok");
-        } catch (Exception ex) {
-            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void deleteAnggota(){
-        try {
-            anggotaDao.delete("");
-            javax.swing.JOptionPane.showMessageDialog(formAnggota, "Delete ok");
-        } catch (Exception ex) {
-            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }  
-    
-    public void tampilData(){
-        try {
-            DefaultTableModel tabelModel = (DefaultTableModel) formAnggota.getTblAnggota();
-            tabelModel.setRowCount(0);
-            java.util.List<Anggota> list = anggotaDao.getAll();
-            for(Anggota anggota : list){
+            DefaultTableModel tableModel = (DefaultTableModel) form.getTblAnggota().getModel();
+            tableModel.setRowCount(0);
+            tableModel.setRowCount(0);
+            List<Anggota> list = anggotaDao.getAll();
+            for(Anggota a : list) {
                 Object[] data = {
-                    anggota.getKodeanggota(),
-                    anggota.getNamaanggota(),
-                    anggota.getAlamat()
+                    a.getKodeAnggota(),
+                    a.getNamaAnggota(),
+                    a.getAlamat(),
+                    a.getJenisKelamin()
                 };
-                tabelModel.addRow(data);
+                tableModel.addRow(data);
             }
         } catch (Exception ex) {
             Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void tabelAnggota() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void TblAnggota() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-   
-    }
-
+}

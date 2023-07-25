@@ -3,116 +3,120 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DINDA.controller;
-import DINDA.model.*;
-import DINDA.dao.*;
-import DINDA.view.*;
+
+import DINDA.dao.BukuDao;
+import DINDA.dao.BukuDaoImpl;
+import DINDA.db.DbHelper;
+import DINDA.model.Buku;
+import DINDA.view.FormBuku;
 import java.sql.Connection;
-import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import DINDA.db.DbHelper;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class BukuController {
-    FormBuku view;
-    Connection cn;
-    Buku bu;
-    BukuDao dao;
-
-    public BukuController(FormBuku view){
+    private Buku buku;
+    private BukuDao bukuDao;
+    private Connection con;
+    private FormBuku form;
+    
+    
+    public BukuController(FormBuku form) {
         try {
-            this.view = view;
-            cn = DbHelper.getConnection();
-            dao = new BukuDaoImpl(cn);
-        } catch (Exception ex) {
+            this.form = form;
+            con = DbHelper.getConnection();
+            bukuDao = new BukuDaoImpl(con);
+            buku = new Buku();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnggotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    public void clearForm(){
-        view.getTxtKodeBuku().setText("");
-        view.getTxtJudulBuku().setText("");
-        view.getTxtPengarang().setText("");
-        view.getTxtPenerbit().setText("");
+    public void clear(){
+        form.getTxtJudulBuku().setText("");
+        form.getTxtKodeBuku().setText("");
+        form.getTxtPengarang().setText("");
+        form.getTxtPenerbit().setText("");
     }
     
-     public void tampil(){
+    public void get(){
         try {
-            DefaultTableModel tabelModel = (DefaultTableModel)
-                    view.getTabelBuku().getModel();
-            tabelModel.setRowCount(0);
-            List<Buku> list = dao.getAll();
-            for (Buku b : list) {
-                Object[] row = {
-                    b.getKodebuku(),
-                    b.getJudulBuku(),
-                    b.getPengarang(),
-                    b.getPenerbit(),
-                };
-                tabelModel.addRow(row);
-                    
-                }
-            
+            String kode = form.getTblBuku()
+                    .getValueAt(form.getTblBuku().getSelectedRow(), 0).toString();
+            buku = bukuDao.getBuku(kode);
+            form.getTxtKodeBuku().setText(buku.getKodeBuku());
+            form.getTxtJudulBuku().setText(buku.getJudulBuku());
+            form.getTxtPengarang().setText(buku.getPengarang());
+            form.getTxtPenerbit().setText(buku.getPenerbit());
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(view, e);
+            JOptionPane.showMessageDialog(form, e);
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    
     public void insert(){
         try {
-            bu = new Buku();
-            bu.setKodebuku(view.getTxtKodeBuku().getText());
-            bu.setJudulbuku(view.getTxtJudulBuku().getText());
-            bu.setPengarang(view.getTxtPengarang().getText());
-            bu.setPenerbit(view.getTxtPenerbit().getText());
-            dao.insert(bu);
-            JOptionPane.showMessageDialog(view, "Entri Data OK");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, e.getMessage());
-            
+            buku = new Buku();
+            buku.setJudulBuku(form.getTxtJudulBuku().getText());
+            buku.setKodeBuku(form.getTxtKodeBuku().getText());
+            buku.setPengarang(form.getTxtPengarang().getText());
+            buku.setPenerbit(form.getTxtPenerbit().getText());
+            bukuDao.insert(buku);
+            JOptionPane.showMessageDialog(form, "Insert Ok!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(form, ex.getMessage());
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    public void update() {
-    try {
-        Buku bu = new Buku();
-        bu.setKodebuku(view.getTxtKodeBuku().getText());
-        bu.setJudulbuku(view.getTxtJudulBuku().getText());
-        bu.setPengarang(view.getTxtPengarang().getText());
-        bu.setPenerbit(view.getTxtPenerbit().getText());
-        dao.update(bu);
-        JOptionPane.showMessageDialog(view, "Update Data OK");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(view, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    public void update(){
+        try {
+            buku.setJudulBuku(form.getTxtJudulBuku().getText());
+            buku.setKodeBuku(form.getTxtKodeBuku().getText());
+            buku.setPengarang(form.getTxtPengarang().getText());
+            buku.setPenerbit(form.getTxtPenerbit().getText());
+            bukuDao.update(buku);
+            JOptionPane.showMessageDialog(form, "Update Ok!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(form, ex.getMessage());
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-}
-
     
     public void delete(){
         try {
-           
-            dao.delete(bu);
-            JOptionPane.showMessageDialog(view, "Delete Data OK");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, e);
+            bukuDao.delete(buku);
+            JOptionPane.showMessageDialog(form, "Delete OK!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(form, "Delete Gagal!");
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     
-     public void getBuku(){
+    public void display(){
         try {
-            String kode = view.getTabelBuku().getValueAt(view.getTabelBuku().getSelectedRow(), 0).toString();
-            bu = dao.getBuku(kode);
-            view.getTxtKodeBuku().setText(bu.getKodebuku());
-            view.getTxtJudulBuku().setText(bu.getJudulBuku());
-            view.getTxtPengarang().setText(bu.getPengarang());
-            view.getTxtPenerbit().setText(bu.getPenerbit());
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, e);
+            DefaultTableModel tableModel = (DefaultTableModel) form.getTblBuku().getModel();
+            tableModel.setRowCount(0);
+            tableModel.setRowCount(0);
+            List<Buku> list = bukuDao.getAll();
+            for(Buku a : list) {
+                Object[] data = {
+                    a.getKodeBuku(),
+                    a.getJudulBuku(),
+                    a.getPengarang(),
+                    a.getPenerbit()
+                };
+                tableModel.addRow(data);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(BukuController.class.getName()).log(Level.SEVERE, null, ex);
         }
-     }
+    }
 }

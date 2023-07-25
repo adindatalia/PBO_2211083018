@@ -93,7 +93,7 @@ private PengembalianFormdb form;
             List<Pengembalian> List = dao.getAll();
             for (Pengembalian pm : List) {
                 Object[] data = {
-                        pm.getKodeAgg(),
+                        pm.getKodeAnggota(),
                         pm.getNamaAnggota(),
                         pm.getKodeBuku(),
                         pm.getJudul(),

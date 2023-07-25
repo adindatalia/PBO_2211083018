@@ -2,144 +2,190 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DINDA.Dao;
+package DINDA.dao;
+
+import DINDA.model.Pengembalian;
+import DINDA.view.FormPengembalian;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import DINDA.model.Pengembalian;
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
-public class PengembalianDaoImpl implements PengembalianDao {
-    private Connection cn;
-    private Pengembalian pg;
-
-    public PengembalianDaoImpl(Connection cn) {
-        this.cn = cn;
-
+public class PengembalianDaoImpl implements PengembalianDao{
+    private Connection connection;
+    
+    public PengembalianDaoImpl(Connection connection){
+        this.connection = connection;
     }
-
-    @Override
-    public void Insert(Pengembalian pg) throws Exception {
-        String insert = "INSERT INTO pengembalian VALUES (?,?,?,?,?,?)";
-        PreparedStatement ps = cn.prepareStatement(insert);
-        ps.setString(1, pg.getKodeAgg());
-        ps.setString(2, pg.getKodeBuku());
-        ps.setString(3, pg.getTglpPjm());
-        ps.setString(4, pg.getTglDikembalikan());
-        ps.setInt(5, pg.getTerlambat());
-        ps.setDouble(6, pg.getDenda());
+    
+    public void insert(Pengembalian pengembalian) throws Exception{
+        String sql = "INSERT INTO pengembalian values(?,?,?,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, pengembalian.getKodeAnggota());
+        ps.setString(2, pengembalian.getKodeBuku());
+        ps.setString(3, pengembalian.getTglPinjam());
+        ps.setString(4, pengembalian.getTglDikembalikan());
+        ps.setString(5,""+ pengembalian.getTerlambat());
+        ps.setString(6,""+ pengembalian.getDenda());
         ps.executeUpdate();
+        ps.close();
     }
-
-    @Override
-    public void Update(Pengembalian pg) throws Exception {
-        String update = "UPDATE `pengembalian` SET `tgldikembalikan` = ?, `terlambat` = ?, `denda` = ? WHERE `pengembalian`.`kodeanggota` = ? AND `pengembalian`.`kodebuku` = ? AND `pengembalian`.`tglpinjam` = ?";
-        PreparedStatement ps = cn.prepareStatement(update);
-        ps.setString(1, pg.getTglDikembalikan());
-        ps.setInt(2, pg.getTerlambat());
-        ps.setDouble(3, pg.getDenda());
-        ps.setString(4, pg.getKodeAgg());
-        ps.setString(5, pg.getKodeBuku());
-        ps.setString(6, pg.getTglpPjm());
+    
+    public void update(Pengembalian pengembalian) throws Exception {
+        String sql = "UPDATE pengembalian SET terlambat = ?, denda = ?, tglDikembalikan = ?"
+                + "WHERE kodeAnggota = ? && kodeBuku = ? && tglPinjam = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, ""+pengembalian.getTerlambat());
+        ps.setString(2, ""+pengembalian.getDenda());
+        ps.setString(4, pengembalian.getKodeAnggota());
+        ps.setString(5, pengembalian.getKodeBuku());
+        ps.setString(6, pengembalian.getTglPinjam());
+        ps.setString(3, pengembalian.getTglDikembalikan());
         ps.executeUpdate();
+        ps.close();
     }
-
-    @Override
-    public void Delete(Pengembalian pg) throws Exception {
-        String delete = "DELETE FROM `pengembalian` WHERE `pengembalian`.`kodeanggota` = ? AND `pengembalian`.`kodebuku` = ? AND `pengembalian`.`tglpinjam` = ?";
-        PreparedStatement ps = cn.prepareStatement(delete);
-        ps.setString(1, pg.getKodeAgg());
-        ps.setString(2, pg.getKodeBuku());
-        ps.setString(3, pg.getTglpPjm());
+    
+    public void delete(Pengembalian pengembalian) throws Exception{
+        String sql = "DELETE FROM pengembalian WHERE kodeAnggota = ? && kodeBuku = ? "
+                + "&& tglPinjam = ? && tglDikembalikan = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, pengembalian.getKodeAnggota());
+        ps.setString(2, pengembalian.getKodeBuku());
+        ps.setString(3, pengembalian.getTglPinjam());
+        ps.setString(4, pengembalian.getTglDikembalikan());
         ps.executeUpdate();
+        ps.close();
     }
-
-    @Override
-    public Pengembalian getPm(String kodeBuku, String kodeanggota, String tglpinjam) throws Exception {
-        String all = "select * from pengembalian where kodeanggota = '?' && kodebuku = '?' && tglpinjam = '?'";
-        PreparedStatement ps = cn.prepareStatement(all);
-        ps.setString(1, kodeBuku);
-        ps.setString(2, kodeanggota);
-        ps.setString(3, tglpinjam);
+    
+    public Pengembalian getPengembalian(String kodeAnggota,String kodeBuku, String tglPinjam, String tglDikembalikan) throws Exception{
+        String sql = "SELECT * FROM pengembalian WHERE kodeAnggota = ? && kodeBuku = ? && tglPinjam = ? && tglDikembalikan = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, kodeAnggota);
+        ps.setString(2, kodeBuku);
+        ps.setString(3, tglPinjam);
+        ps.setString(4, tglDikembalikan);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            pg = new Pengembalian();
-            pg.setKodeAgg(rs.getString(1));
-            pg.setKodeBuku(rs.getString(2));
-            pg.setTglpPjm(rs.getString(3));
-            pg.setTglDikembalikan(rs.getString(4));
+        Pengembalian pengembalian = null;
+        if(rs.next()){
+            pengembalian = new Pengembalian();
+            pengembalian.setKodeAnggota(rs.getString(1));
+            pengembalian.setKodeBuku(rs.getString(2));
+            pengembalian.setTglPinjam(rs.getString(3));
+            pengembalian.setTglDikembalikan(rs.getString(4));
         }
-        return pg;
+        return pengembalian;
     }
+    
+    public List<Pengembalian> getAll() throws Exception{
+//        String sql = "SELECT * FROM pengembalian";
+//        String sql =
+//                "SELECT anggota.kodeAnggota, buku.kodeBuku, peminjaman.tglPinjam, pengembalian.tglDikembalikan "
+//                + "FROM anggota join peminjaman using(kodeanggota) join buku using(kodebuku) join pengembalian"
+//                + "ON pengembalian.kodeanggota = peminjaman.kodeanggota && pengembalian.kodebuku = peminjaman.kodebuku && "
+//                + "pengembalian.tglpinjam = peminjaman.tglpinjam ";
+        String sql = "SELECT "
+                + "anggota.kodeAnggota, buku.kodeBuku, "
+                + "peminjaman.tglPinjam, "
+                + "IFNULL(pengembalian.tglDikembalikan, \"\"), "
+                + "peminjaman.tglKembali "
+                + "FROM anggota RIGHT JOIN peminjaman USING(kodeanggota) "
+                + "LEFT JOIN buku USING(kodebuku) LEFT JOIN pengembalian "
+                + "ON peminjaman.kodeanggota = pengembalian.kodeanggota && "
+                + "peminjaman.kodebuku = pengembalian.kodebuku && "
+                + "peminjaman.tglpinjam = pengembalian.tglpinjam";
+//                + "WHERE ? LIKE \'%"
+//                + form.getTxtCari()
+//                + "%\'";
 
-    @Override
-    public List<Pengembalian> getAll() throws Exception {
-        String getall = "SELECT anggota.kodeanggota, anggota.namaanggota, buku.kodebuku, buku.judulbuku, peminjaman.tglpinjam, peminjaman.tglkembali, pengembalian.tgldikembalikan, pengembalian.terlambat, pengembalian.denda FROM peminjaman JOIN anggota ON peminjaman.kodeanggota = anggota.kodeanggota JOIN buku ON peminjaman.kodebuku = buku.kodebuku LEFT JOIN pengembalian ON (peminjaman.kodeanggota = pengembalian.kodeanggota AND peminjaman.kodebuku = pengembalian.kodebuku AND CAST(peminjaman.tglpinjam AS DATE) = CAST(pengembalian.tglpinjam AS DATE))";
-        PreparedStatement ps = cn.prepareStatement(getall);
+        PreparedStatement ps = connection.prepareStatement(sql);
+//        ps.setString(1, form.getCboPilih().getSelectedItem().toString());
         ResultSet rs = ps.executeQuery();
-        List<Pengembalian> data = new ArrayList<>();
-        while (rs.next()) {
-            // String tanggaldikembalikan = rs.getString(7);
-            // if (tanggaldikembalikan == null) {
-            pg = new Pengembalian();
-            pg.setKodeAgg(rs.getString(1));
-            pg.setNamaAnggota(rs.getString(2));
-            pg.setKodeBuku(rs.getString(3));
-            pg.setJudul(rs.getString(4));
-            pg.setTglpPjm(rs.getString(5));
-            pg.setTglkmbl(rs.getString(6));
-            pg.setTglDikembalikan(rs.getString(7));
-            pg.setTerlambat(rs.getInt(8));
-            pg.setDenda(rs.getDouble(9));
-            data.add(pg);
-            // } // perhatian : hilangkan kode program dibawah
-            // String tanggaldikembalikan = rs.getString(7);
-            // if (tanggaldikembalikan == null) { }
-            // jika ingin program menampilkan data, semua data yang ada.
+        Pengembalian pengembalian;
+        List<Pengembalian> list = new ArrayList<>();
+        while(rs.next()){
+            pengembalian = new Pengembalian();
+            pengembalian.setKodeAnggota(rs.getString(1));
+            pengembalian.setKodeBuku(rs.getString(2));
+            pengembalian.setTglPinjam(rs.getString(3));
+            pengembalian.setTglDikembalikan(rs.getString(4));
+            try{
+                pengembalian.setTerlambat(rs.getString(5));
+            }catch(Exception e){
+                System.out.println("Belum dikembalikan");
+            }
+            pengembalian.setDenda();
+            list.add(pengembalian);
         }
-        return data;
+        return list;
     }
-
-    public int terlmbat(String tgl1, String tgl2) throws Exception {
+    
+    public List<Pengembalian> getAll(String kategori, String cari) throws Exception{
+        String sql = "";
+        if(kategori.equals("namaAnggota"))
+            sql = "SELECT anggota.kodeAnggota, buku.kodeBuku, "
+                + "peminjaman.tglPinjam, "
+                + "IFNULL(pengembalian.tglDikembalikan, ''), "
+                + "peminjaman.tglKembali "
+                + "FROM anggota RIGHT JOIN peminjaman USING(kodeanggota) "
+                + "LEFT JOIN buku USING(kodebuku) LEFT JOIN pengembalian "
+                + "ON peminjaman.kodeanggota = pengembalian.kodeanggota && "
+                + "peminjaman.kodebuku = pengembalian.kodebuku && "
+                + "peminjaman.tglpinjam = pengembalian.tglpinjam "
+                + "WHERE anggota."+kategori+" LIKE ?";
+        else
+            sql = "SELECT anggota.kodeAnggota, buku.kodeBuku, "
+                + "peminjaman.tglPinjam, "
+                + "IFNULL(pengembalian.tglDikembalikan, ''), "
+                + "peminjaman.tglKembali "
+                + "FROM anggota RIGHT JOIN peminjaman USING(kodeanggota) "
+                + "LEFT JOIN buku USING(kodebuku) LEFT JOIN pengembalian "
+                + "ON peminjaman.kodeanggota = pengembalian.kodeanggota && "
+                + "peminjaman.kodebuku = pengembalian.kodebuku && "
+                + "peminjaman.tglpinjam = pengembalian.tglpinjam "
+                + "WHERE peminjaman."+kategori+" LIKE ?";
+            
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, "%" + cari + "%");
+        ResultSet rs = ps.executeQuery();
+        Pengembalian pengembalian;
+        List<Pengembalian> list = new ArrayList<>();
+        while(rs.next()){
+            pengembalian = new Pengembalian();
+            pengembalian.setKodeAnggota(rs.getString(1));
+            pengembalian.setKodeBuku(rs.getString(2));
+            pengembalian.setTglPinjam(rs.getString(3));
+            pengembalian.setTglDikembalikan(rs.getString(4));
+            try{
+                pengembalian.setTerlambat(rs.getString(5));
+            }catch(Exception e){
+                System.out.println("Belum dikembalikan");
+            }
+            pengembalian.setDenda();
+            list.add(pengembalian);
+        }
+        return list;
+    }
+    
+    public int selisihTanggal(String tgl1, String tgl2) throws Exception{
         int selisih = 0;
-        String terlambat = "SELECT DATEDIFF(?, ?) AS selisih";
-        PreparedStatement ps = cn.prepareStatement(terlambat);
+        String sql = "SELECT DATEDIFF(?,?) as selisih";
+        PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, tgl1);
         ps.setString(2, tgl2);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+        if(rs.next()){
             selisih = rs.getInt(1);
         }
         return selisih;
     }
 
     @Override
-    public List<Pengembalian> cari(String kode, String cari) throws Exception {
-        String search = "SELECT anggota.kodeanggota, anggota.namaanggota, buku.kodebuku, buku.judulbuku, peminjaman.tglpinjam, peminjaman.tglkembali, pengembalian.tgldikembalikan, pengembalian.terlambat, pengembalian.denda FROM peminjaman JOIN anggota ON peminjaman.kodeanggota = anggota.kodeanggota JOIN buku ON peminjaman.kodebuku = buku.kodebuku LEFT JOIN pengembalian ON (peminjaman.kodeanggota = pengembalian.kodeanggota AND peminjaman.kodebuku = pengembalian.kodebuku AND CAST(peminjaman.tglpinjam AS DATE) = CAST(pengembalian.tglpinjam AS DATE)) WHERE "+kode+" LIKE '%"+cari+"%'";
-        PreparedStatement ps = cn.prepareStatement(search);
-//        ps.setString(1, kode);
-//        ps.setString(2, cari);
-        ResultSet rs = ps.executeQuery();
-        List<Pengembalian> data = new ArrayList<>();
-        while (rs.next()) {
-            pg = new Pengembalian();
-            pg.setKodeAgg(rs.getString(1));
-            pg.setNamaAnggota(rs.getString(2));
-            pg.setKodeBuku(rs.getString(3));
-            pg.setJudul(rs.getString(4));
-            pg.setTglpPjm(rs.getString(5));
-            pg.setTglkmbl(rs.getString(6));
-            pg.setTglDikembalikan(rs.getString(7));
-            pg.setTerlambat(rs.getInt(8));
-            pg.setDenda(rs.getDouble(9));
-            data.add(pg);
-        }
-        return data;
-    } 
-    
+    public List<Pengembalian> cari(String kode, String cari) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

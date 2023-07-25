@@ -6,54 +6,52 @@ package DINDA.model;
 
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class Anggota {
-private String kodeanggota;
-    private String namaanggota;
+    private String kodeAnggota;
+    private String namaAnggota;
     private String alamat;
-    private String jeniskelamin;
+    private String jenisKelamin;
 
-    public Anggota(){
-        
-    }
-    
-    public Anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelamin) {
-        this.kodeanggota = kodeanggota;
-        this.namaanggota = namaanggota;
+    //constuctor
+    public Anggota() {}
+    public Anggota(String kodeAnggota, String namaAnggota, String alamat, String jenisKelamin) {
+        this.kodeAnggota = kodeAnggota;
+        this.namaAnggota = namaAnggota;
         this.alamat = alamat;
-        this.jeniskelamin = jeniskelamin;
+        this.jenisKelamin = jenisKelamin;
     }
 
-    public String getKodeanggota() {
-        return kodeanggota;
+    //mutator
+    public void setKodeAnggota(String kodeAnggota) {
+        this.kodeAnggota = kodeAnggota;
     }
-
-    public void setKodeanggota(String kodeanggota) {
-        this.kodeanggota = kodeanggota;
+    public void setNamaAnggota(String namaAnggota) {
+        this.namaAnggota = namaAnggota;
     }
-
-    public String getNamaanggota() {
-        return namaanggota;
-    }
-
-    public void setNamaanggota(String namaanggota) {
-        this.namaanggota = namaanggota;
-    }
-
-    public String getAlamat() {
-        return alamat;
-    }
-
     public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
-
-    public String getJeniskelamin() {
-        return jeniskelamin;
+    public void setJenisKelamin(String jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
     }
+    
+    //accessor
+    public String getKodeAnggota() {
+        return kodeAnggota;
+    }
+    public String getNamaAnggota() {
+        return namaAnggota;
+    }
+    public String getAlamat() {
+        return alamat;
+    }
+    public String getJenisKelamin() {
+        return jenisKelamin;
+    }    
 
-    public void setJeniskelamin(String jeniskelamin) {
-        this.jeniskelamin = jeniskelamin;
+    public String getKodeanggota() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

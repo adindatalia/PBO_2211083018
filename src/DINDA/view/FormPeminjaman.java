@@ -4,33 +4,26 @@
  */
 package DINDA.view;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import DINDA.controller.PeminjamanController;
-import DINDA.controller.*;
+import javax.swing.JOptionPane;
 /**
  *
- * @author ASUS
+ * @author Bagas
  */
 public class FormPeminjaman extends javax.swing.JFrame {
-    PeminjamanController pctrl;
 
     /**
      * Creates new form FormPeminjaman
      */
+    PeminjamanController con;
     public FormPeminjaman() {
+        con = new PeminjamanController(this);
         initComponents();
-        pctrl = new PeminjamanController(this);
-        pctrl.clearForm();
-        pctrl.tampil();
-    }
-    
-    public JTable getTabelPeminjaman() {
-        return tabelPeminjaman;
+        con.display();
+        con.clear();
     }
 
     public JComboBox<String> getCboAnggota() {
@@ -41,16 +34,16 @@ public class FormPeminjaman extends javax.swing.JFrame {
         return cboBuku;
     }
 
-
-    
-    
-
-    public JTextField getTxtTglpinjam() {
-        return txtTglpinjam;
+    public JTable getTblPeminjaman() {
+        return tblPeminjaman;
     }
-    
-    public JTextField getTxtTglkembali() {
-        return txtTglkembali;
+
+    public JTextField getTxtTglKembali() {
+        return txtTglKembali;
+    }
+
+    public JTextField getTxtTglPinjam() {
+        return txtTglPinjam;
     }
 
     /**
@@ -62,65 +55,25 @@ public class FormPeminjaman extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtTglpinjam = new javax.swing.JTextField();
-        txtTglkembali = new javax.swing.JTextField();
-        btnInsert = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelPeminjaman = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txtTglPinjam = new javax.swing.JTextField();
+        txtTglKembali = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         cboAnggota = new javax.swing.JComboBox<>();
         cboBuku = new javax.swing.JComboBox<>();
-        btnPengembalian = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPeminjaman = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Kode Anggota");
-
-        jLabel2.setText("Kode Buku");
-
-        jLabel3.setText("Tgl Pinjam");
-
-        jLabel4.setText("Tgl Kembali");
-
-        txtTglpinjam.setText("jTextField3");
-
-        txtTglkembali.setText("jTextField4");
-
-        btnInsert.setText("Insert");
-        btnInsert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnCancel.setText("Cancel");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
-            }
-        });
-
-        tabelPeminjaman.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -128,32 +81,106 @@ public class FormPeminjaman extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Kode Anggota", "Kode Buku", "Tgl Pinjam", "Tgl Kembali"
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel2.setText("Kode Anggota");
+
+        jLabel3.setText("Kode Buku");
+
+        jLabel4.setText("Tanggal pinjam");
+
+        jLabel5.setText("Tanggal kembali");
+
+        txtTglPinjam.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTglPinjamFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTglPinjamFocusLost(evt);
+            }
+        });
+
+        txtTglKembali.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTglKembaliFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTglKembaliFocusLost(evt);
+            }
+        });
+        txtTglKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTglKembaliActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Insert");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        cboAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cboBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton2.setText("Update");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Cancel");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        tblPeminjaman.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "KodeAnggota", "Nama", "KodeBuku", "Judul", "TglPinjam", "TglKembali"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tabelPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelPeminjamanMouseClicked(evt);
+                tblPeminjamanMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelPeminjaman);
+        jScrollPane2.setViewportView(tblPeminjaman);
 
-        cboAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnPengembalian.setText("Pengembalian");
-        btnPengembalian.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setText("Pengembalian");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPengembalianActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -162,122 +189,158 @@ public class FormPeminjaman extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(cboAnggota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(49, 49, 49)
-                            .addComponent(txtTglkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(36, 36, 36)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cboBuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnInsert)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPengembalian)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(cboBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(txtTglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(txtTglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(6, 6, 6)
+                                .addComponent(jButton2)
+                                .addGap(6, 6, 6)
+                                .addComponent(jButton3)
+                                .addGap(6, 6, 6)
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cboAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cboBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(cboAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel3))
-                    .addComponent(txtTglpinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(cboBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel4))
-                    .addComponent(txtTglkembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsert)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnCancel)
-                    .addComponent(btnPengembalian))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(txtTglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel5))
+                    .addComponent(txtTglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton4)
+                        .addComponent(jButton5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(499, 510));
+        setSize(new java.awt.Dimension(443, 348));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        pctrl.delete();
-        pctrl.clearForm();
-        pctrl.tampil();
-    }//GEN-LAST:event_btnDeleteActionPerformed
+        con.insert();
+        con.clear();
+        con.display();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        pctrl.insert();
-        pctrl.clearForm();
-        pctrl.tampil();
-    }//GEN-LAST:event_btnInsertActionPerformed
+        con.update();
+        con.clear();
+        con.display();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        pctrl.update();
-        pctrl.clearForm();
-        pctrl.tampil();
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        con.delete();
+        con.clear();
+        con.display();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        pctrl.clearForm();
-    }//GEN-LAST:event_btnCancelActionPerformed
+        con.clear();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void tabelPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPeminjamanMouseClicked
+    private void txtTglKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTglKembaliActionPerformed
         // TODO add your handling code here:
-        pctrl.getPeminjaman();
-    }//GEN-LAST:event_tabelPeminjamanMouseClicked
+    }//GEN-LAST:event_txtTglKembaliActionPerformed
 
-    private void btnPengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengembalianActionPerformed
+    private void tblPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPeminjamanMouseClicked
         // TODO add your handling code here:
-        int i = JOptionPane.showConfirmDialog(rootPane, "Kembali ke Pengembalian ?", "confirm", JOptionPane.YES_NO_OPTION);
-        if (i==0){
-            PengembalianFormdb pb = null;
-            try {
-                pb = new PengembalianFormdb();
-            } catch (Exception ex) {
-                Logger.getLogger(FormPeminjaman.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            pb.setVisible(true);
+        con.get();
+    }//GEN-LAST:event_tblPeminjamanMouseClicked
+
+    private void txtTglPinjamFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTglPinjamFocusGained
+        // TODO add your handling code here:
+        if(txtTglPinjam.getText().equals("yyyy-mm-dd")){
+            txtTglPinjam.setText("");
+        }
+    }//GEN-LAST:event_txtTglPinjamFocusGained
+
+    private void txtTglPinjamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTglPinjamFocusLost
+        // TODO add your handling code here:
+        if(txtTglPinjam.getText().equals("")){
+            txtTglPinjam.setText("yyyy-mm-dd");
+        }
+    }//GEN-LAST:event_txtTglPinjamFocusLost
+
+    private void txtTglKembaliFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTglKembaliFocusGained
+        // TODO add your handling code here:
+        if(txtTglKembali.getText().equals("yyyy-mm-dd")){
+            txtTglKembali.setText("");
+        }
+    }//GEN-LAST:event_txtTglKembaliFocusGained
+
+    private void txtTglKembaliFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTglKembaliFocusLost
+        // TODO add your handling code here:
+        if(txtTglKembali.getText().equals("")){
+            txtTglKembali.setText("yyyy-mm-dd");
+        }
+    }//GEN-LAST:event_txtTglKembaliFocusLost
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int i = JOptionPane.showConfirmDialog(rootPane,"Pergi ke form pengembalian?","Keluar?",
+                JOptionPane.YES_NO_OPTION);
+        if(i == 0){
+            FormPengembalian kembali = new FormPengembalian();
+            kembali.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_btnPengembalianActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,20 +378,22 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnInsert;
-    private javax.swing.JButton btnPengembalian;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboAnggota;
     private javax.swing.JComboBox<String> cboBuku;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelPeminjaman;
-    private javax.swing.JTextField txtTglkembali;
-    private javax.swing.JTextField txtTglpinjam;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPeminjaman;
+    private javax.swing.JTextField txtTglKembali;
+    private javax.swing.JTextField txtTglPinjam;
     // End of variables declaration//GEN-END:variables
 }

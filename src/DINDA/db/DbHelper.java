@@ -3,38 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DINDA.db;
+
+import DINDA.model.*;
+import DINDA.dao.*;
 import java.sql.*;
 import com.mysql.cj.jdbc.MysqlDataSource;
-import DINDA.dao.*;
-import DINDA.model.*;
-import java.sql.*;
 import javax.swing.JOptionPane;
+
 /**
  *
- * @author Administrator
+ * @author Bagas
  */
 public class DbHelper {
-private static Connection cn;
-
-    public static Connection getConnection() throws SQLException {
-        if (cn == null) {
-            String databaseURL = "jdbc:mysql://localhost/pbo_2211083018";
-            String username = "root";
-            String password = "";
-            cn = DriverManager.getConnection(databaseURL, username, password);
-            System.out.println("berhasil");
+    private static Connection connection;
+    
+    public static Connection getConnection() throws SQLException{
+        if(connection == null){
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setURL("jdbc:mysql://localhost/pbo_2211083018");
+            dataSource.setUser("root");
+            dataSource.setPassword("");
+            connection = dataSource.getConnection();
         }
-        return cn;
+        return connection;
+    }
+    
+    public static void main(String[] args){
+        try{
+            connection = DbHelper.getConnection();
+            AnggotaDao dao = new AnggotaDaoImpl(connection);
+            Anggota anggota = new Anggota("003","Ali","Padang","L");
+            dao.insert(anggota);
+            DbHelper.getConnection();
+            JOptionPane.showMessageDialog(null, "Koneksi OK!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 }
-//    public static void main(String[] args){
-//        try {
-//            connection = DbHelper.getConnection();
-//            AnggotaDao dao = new AnggotaDaoImpl(connection);
-//            Anggota anggota = new Anggota("A001", "Ali", "Padang", "L");
-//            dao.insert(anggota);
-//            JOptionPane.showMessageDialog(null, "Entri data Ok");
-//        } catch(Exception ex){
-//            JOptionPane.showMessageDialog(null, ex.getMessage());
-//        }
-
