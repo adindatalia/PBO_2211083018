@@ -9,40 +9,51 @@ package DINDA150423.model;
  * @author Administrator
  */
 public class Anggota {
-    private String nobp;
-    private String nama;
+private String kodeanggota;
+    private String namaanggota;
     private String alamat;
-    
+    private String jeniskelamin;
+
     public Anggota(){
+        
     }
     
-    public Anggota(String nobp,String nama,String alamat){
-        this.nobp = nobp;
-        this.nama = nama;
+    public Anggota(String kodeanggota, String namaanggota, String alamat, String jeniskelamin) {
+        this.kodeanggota = kodeanggota;
+        this.namaanggota = namaanggota;
         this.alamat = alamat;
+        this.jeniskelamin = jeniskelamin;
     }
-    
-    public String getNobp(){
-        return nobp;
+
+    public String getKodeanggota() {
+        return kodeanggota;
     }
-    
-    public void setNobp(String nobp){
-        this.nobp= nobp;
+
+    public void setKodeanggota(String kodeanggota) {
+        this.kodeanggota = kodeanggota;
     }
-    
-    public String getNama(){
-        return nama;
+
+    public String getNamaanggota() {
+        return namaanggota;
     }
-    
-    public void setNama(String nama){
-        this.nama= nama;
+
+    public void setNamaanggota(String namaanggota) {
+        this.namaanggota = namaanggota;
     }
-    
-    public String getAlamat(){
+
+    public String getAlamat() {
         return alamat;
     }
-    
-    public void setAlamat(String alamat){
-        this.alamat= alamat;
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+
+    public String getJeniskelamin() {
+        return jeniskelamin;
+    }
+
+    public void setJeniskelamin(String jeniskelamin) {
+        this.jeniskelamin = jeniskelamin;
     }
 }
