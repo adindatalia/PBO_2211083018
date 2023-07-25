@@ -4,18 +4,15 @@
  */
 package DINDA.Dao;
 import java.util.List;
-import DINDA.model.Anggota;
-
+import DINDA.model.Peminjaman;
 /**
  *
  * @author Administrator
  */
-public interface AnggotaDao {
-    void insert (Anggota anggota) throws Exception;
-    
-
-    void update (String index, Anggota anggota)throws Exception;
+public interface PeminjamanDao {
+    void insert (Peminjaman peminjaman) throws Exception;
+    void update (String index, Peminjaman peminjaman)throws Exception;
     void delete (String index) throws Exception;
-    Anggota getAnggota(String kode) throws Exception;
-    List<Anggota> getAll() throws Exception;
+    Peminjaman getPeminjaman(String kode) throws Exception;
+    List<Peminjaman> getAll() throws Exception;
 }
