@@ -4,6 +4,7 @@
  */
 package DINDA150423.view;
 import DINDA150423.controller.AnggotaController;
+import javax.swing.JComboBox;
 /**
  *
  * @author Administrator
@@ -21,20 +22,20 @@ public class FormAnggota extends javax.swing.JFrame {
         controller.tampilData();
     }
     
-    public javax.swing.JTextField getTxtNobp(){
-        return txtNobp;
+    public javax.swing.JTextField getTxtKodeAnggota(){
+        return txtKodeAnggota;
     }
     
-    public javax.swing.JTextField getTxtNama(){
-        return txtNama;
+    public javax.swing.JTextField getTxtNamaAnggota(){
+        return txtNamaAnggota;
     }
     
     public javax.swing.JTextField getTxtAlamat(){
         return txtAlamat;
     }
     
-    public javax.swing.JTable getTblAnggota(){
-        return tblAnggota;
+    public JComboBox<String> getCboJenisKelamin(){
+        return cboJenisKelamin;
     }
 
     /**
@@ -49,34 +50,64 @@ public class FormAnggota extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNobp = new javax.swing.JTextField();
-        txtNama = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtKodeAnggota = new javax.swing.JTextField();
+        txtNamaAnggota = new javax.swing.JTextField();
         txtAlamat = new javax.swing.JTextField();
         btnInsert = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblAnggota = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelAnggota = new javax.swing.JTable();
+        cboJenisKelamin = new javax.swing.JComboBox<>();
+
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
-        jLabel1.setText("Kodeanggota");
+        jLabel3.setText("Jenis Kelamin");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 100, 80, 20);
 
-        jLabel2.setText("Nama");
+        jLabel4.setText("Kode Anggota");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(10, 10, 80, 20);
 
-        jLabel3.setText("Alamat");
+        jLabel5.setText("Nama Anggota");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(10, 40, 80, 20);
 
-        txtNobp.setText("jTextField1");
-        txtNobp.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setText("Alamat");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(10, 70, 80, 20);
+
+        txtKodeAnggota.setText("jTextField1");
+        txtKodeAnggota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNobpActionPerformed(evt);
+                txtKodeAnggotaActionPerformed(evt);
             }
         });
+        getContentPane().add(txtKodeAnggota);
+        txtKodeAnggota.setBounds(100, 10, 400, 22);
 
-        txtNama.setText("jTextField2");
+        txtNamaAnggota.setText("jTextField2");
+        getContentPane().add(txtNamaAnggota);
+        txtNamaAnggota.setBounds(100, 40, 400, 22);
 
         txtAlamat.setText("jTextField3");
+        txtAlamat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAlamatActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtAlamat);
+        txtAlamat.setBounds(100, 70, 400, 22);
 
         btnInsert.setText("Insert");
         btnInsert.addActionListener(new java.awt.event.ActionListener() {
@@ -84,6 +115,8 @@ public class FormAnggota extends javax.swing.JFrame {
                 btnInsertActionPerformed(evt);
             }
         });
+        getContentPane().add(btnInsert);
+        btnInsert.setBounds(10, 130, 72, 23);
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +124,8 @@ public class FormAnggota extends javax.swing.JFrame {
                 btnUpdateActionPerformed(evt);
             }
         });
+        getContentPane().add(btnUpdate);
+        btnUpdate.setBounds(110, 130, 72, 23);
 
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +133,8 @@ public class FormAnggota extends javax.swing.JFrame {
                 btnDeleteActionPerformed(evt);
             }
         });
+        getContentPane().add(btnDelete);
+        btnDelete.setBounds(200, 130, 72, 23);
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -105,8 +142,10 @@ public class FormAnggota extends javax.swing.JFrame {
                 btnCancelActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCancel);
+        btnCancel.setBounds(300, 130, 72, 23);
 
-        tblAnggota.setModel(new javax.swing.table.DefaultTableModel(
+        tabelAnggota.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -114,86 +153,37 @@ public class FormAnggota extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "kode anggota", "nama anggota", "alamat", "jenis kelamin"
+                "Kode Anggota", "Nama Anggota", "Alamat", "Jenis Kelamin"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAnggotaMouseClicked(evt);
+                tabelAnggotaMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tblAnggota);
+        jScrollPane1.setViewportView(tabelAnggota);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtAlamat))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNama))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNobp, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(btnInsert)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnUpdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNobp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsert)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnDelete)
-                    .addComponent(btnCancel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
-        );
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 170, 490, 210);
 
-        pack();
+        cboJenisKelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboJenisKelamin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboJenisKelaminActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cboJenisKelamin);
+        cboJenisKelamin.setBounds(100, 100, 400, 22);
+
+        setSize(new java.awt.Dimension(552, 433));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,9 +219,13 @@ public class FormAnggota extends javax.swing.JFrame {
 
     private void tblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnggotaMouseClicked
         // TODO add your handling code here:
-        controller.tabelKlik();
+        controller.tabelAnggota();
         
     }//GEN-LAST:event_tblAnggotaMouseClicked
+
+    private void cboJenisKelaminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboJenisKelaminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboJenisKelaminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,13 +267,17 @@ public class FormAnggota extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cboJenisKelamin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblAnggota;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabelAnggota;
     private javax.swing.JTextField txtAlamat;
-    private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtNobp;
+    private javax.swing.JTextField txtKodeAnggota;
+    private javax.swing.JTextField txtNamaAnggota;
     // End of variables declaration//GEN-END:variables
 }

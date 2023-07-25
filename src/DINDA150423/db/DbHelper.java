@@ -18,7 +18,7 @@ private static Connection cn;
 
     public static Connection getConnection() throws SQLException {
         if (cn == null) {
-            String databaseURL = "jdbc:mysql://localhost/pbo_2211083043";
+            String databaseURL = "jdbc:mysql://localhost/pbo_2211083018";
             String username = "root";
             String password = "";
             cn = DriverManager.getConnection(databaseURL, username, password);
